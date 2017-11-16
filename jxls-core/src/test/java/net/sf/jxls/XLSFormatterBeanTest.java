@@ -31,14 +31,14 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 /**
- * @author 
+ * @author
  */
 public class XLSFormatterBeanTest extends TestCase {
     protected final Log log = LogFactory.getLog(getClass());
 
     public static final String formatterBeanXLS = "/templates/formatterbean.xls";
     public static final String formatterBeanDestXLS = "target/formatterbean_output.xls";
-    
+
     SimpleBean simpleBean1;
     SimpleBean simpleBean2;
     SimpleBean simpleBean3;
@@ -84,11 +84,11 @@ public class XLSFormatterBeanTest extends TestCase {
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
 
         //assert and formatting and styles
-        
+
         is.close();
         saveWorkbook(resultWorkbook, formatterBeanDestXLS);
     }
-    
+
     private void saveWorkbook(Workbook resultWorkbook, String fileName) throws IOException {
             if (log.isInfoEnabled()) {
                 log.info("Saving " + fileName);
@@ -99,7 +99,7 @@ public class XLSFormatterBeanTest extends TestCase {
             os.close();
             log.info("Output Excel saved to " + fileName);
     }
-    
+
 	public static class FontVO {
 		private static String DELIM = "-";
 
@@ -222,7 +222,7 @@ public class XLSFormatterBeanTest extends TestCase {
 			StringBuilder builder = new StringBuilder();
 			builder.append( alignment );
 			builder.append( DELIM );
-			builder.append( borderBottom );	
+			builder.append( borderBottom );
 			builder.append( DELIM );
 			builder.append( borderLeft );
 			builder.append( DELIM );
@@ -542,8 +542,8 @@ public class XLSFormatterBeanTest extends TestCase {
 
 	public static class ReusableFonts {
 		private Map<String, HSSFFont> reusableFonts = new HashMap<String, HSSFFont>();
-		
-		private HSSFFont getOrCreateFont( HSSFWorkbook workbook, FontVO fontVO ) {		
+
+		private HSSFFont getOrCreateFont( HSSFWorkbook workbook, FontVO fontVO ) {
 			String keyString = fontVO.toString();
 			HSSFFont reusableFont = this.reusableFonts.get( keyString );
 			if( reusableFont == null ) {
@@ -554,12 +554,12 @@ public class XLSFormatterBeanTest extends TestCase {
 			return reusableFont;
 		}
 	}
-	
+
 	public static class ReusableStyles {
 		private Map<String, HSSFCellStyle> reusableStyles = new HashMap<String, HSSFCellStyle>();
-		
+
 		public HSSFCellStyle getOrCreateStyle( HSSFWorkbook workbook, StyleVO styleVO ) {
-			String keyString = styleVO.toString(); 
+			String keyString = styleVO.toString();
 			HSSFCellStyle style = reusableStyles.get( keyString );
 
 			if( style == null ) {
@@ -570,31 +570,31 @@ public class XLSFormatterBeanTest extends TestCase {
 			return style;
 		}
 	}
-	
+
 	public static class Formatter {
-		
+
 		private ReusableFonts fonts = new ReusableFonts();
 		private ReusableStyles styles = new ReusableStyles();
-		
+
 		public StyleVO getStyle( HSSFCell cell ) {
-			HSSFWorkbook workbook = ((HSSFCell)cell).getRow().getSheet().getWorkbook(); 
+			HSSFWorkbook workbook = ((HSSFCell)cell).getRow().getSheet().getWorkbook();
 			return new StyleVO( cell.getCellStyle(), workbook );
 		}
-		
+
 		public Object setStyle( Object cellVal, HSSFCell cell, StyleVO styleVal ) {
-			HSSFWorkbook workbook = cell.getRow().getSheet().getWorkbook(); 
-			
+			HSSFWorkbook workbook = cell.getRow().getSheet().getWorkbook();
+
 			if ( cellVal instanceof BigDecimal ) {
 				cellVal = ((BigDecimal)cellVal).doubleValue();
 			} else if ( cellVal instanceof Float ) {
 				cellVal = new Double( cellVal.toString() );
 			}
-					
+
 			HSSFFont font = fonts.getOrCreateFont( workbook, styleVal.fontVal );
 			styleVal.fontIndex = font.getIndex();
 			cell.setCellStyle( styles.getOrCreateStyle( workbook, styleVal ) );
 			return cellVal;
 		}
 	}
-    
+
 }

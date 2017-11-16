@@ -111,9 +111,9 @@ public class XLSTransformerTest extends TestCase {
 
     public static final String outlineXLS = "/templates/outline.xls";
     public static final String outlineDestXLS = "target/outline_output.xls";
-    
+
     public static final String horizontalForXLS = "/templates/foriftagHor.xls";
-    
+
     SimpleBean simpleBean1;
     SimpleBean simpleBean2;
     SimpleBean simpleBean3;
@@ -1538,12 +1538,12 @@ public class XLSTransformerTest extends TestCase {
         checker.checkListCells(sourceSheet, 5, resultSheet, 20, (short) 0, baEmployeeNames);
         checker.checkListCells(sourceSheet, 5, resultSheet, 20, (short) 1, baPayments);
         checker.checkListCells(sourceSheet, 5, resultSheet, 20, (short) 2, baBonuses);
-        
+
         resultSheet = resultWorkbook.getSheet("IT");
         assertEquals( "Cell:1", resultSheet.getRow( 8 ).getCell( 1 ).getStringCellValue() );
         assertEquals( "Cell:4", resultSheet.getRow( 8 ).getCell( 4 ).getStringCellValue() );
         assertEquals( "Cell:7", resultSheet.getRow( 8 ).getCell( 7 ).getStringCellValue() );
-        
+
         is.close();
         saveWorkbook(resultWorkbook, poiobjectsDestXLS);
     }
@@ -1603,7 +1603,7 @@ public class XLSTransformerTest extends TestCase {
     	for ( Integer iteration : iterations ) {
     		long time = timeHorizontalForEach( iteration );
     		timeMap.put( iteration, time );
-    		
+
     		if ( baselineIterations > 0 ) {
     			double rowIncreaseFactor = (double)iteration / baselineIterations;
     			double timeIncreaseFactor = (double)time/baselineTime;
@@ -1614,18 +1614,18 @@ public class XLSTransformerTest extends TestCase {
     		}
     	}
     }
-    
+
     protected long timeHorizontalForEach(int iterations) throws ParsePropertyException, InvalidFormatException {
     	long start = System.currentTimeMillis();
     	Map beans = new HashMap();
-    	
+
     	List departments = new ArrayList();
     	for (int rows = 0; rows < iterations; rows++) {
     		List employees = new ArrayList();
     		employees.add( new Employee( "Employee "+rows+"-0", 100d, 100d));
     		employees.add( new Employee( "Employee "+rows+"-1", 100d, 100d));
     		employees.add( new Employee( "Employee "+rows+"-2", 100d, 100d));
-    		
+
     		Department department = new Department("Department "+(rows+1));
     		department.setStaff(employees);
     		departments.add(department);
@@ -1634,7 +1634,7 @@ public class XLSTransformerTest extends TestCase {
     	InputStream is = new BufferedInputStream(getClass().getResourceAsStream("/templates/foriftagHor.xls"));
         XLSTransformer transformer = new XLSTransformer();
         transformer.transformXLS(is, beans);
-        
+
         return System.currentTimeMillis() - start;
     }
 
