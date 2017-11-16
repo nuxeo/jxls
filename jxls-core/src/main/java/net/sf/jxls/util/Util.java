@@ -712,16 +712,16 @@ public final class Util {
     public static CellStyle duplicateStyle(Workbook workbook,
             CellStyle style) {
         CellStyle newStyle = workbook.createCellStyle();
-        newStyle.setAlignment(style.getAlignment());
-        newStyle.setBorderBottom(style.getBorderBottom());
-        newStyle.setBorderLeft(style.getBorderLeft());
-        newStyle.setBorderRight(style.getBorderRight());
-        newStyle.setBorderTop(style.getBorderTop());
+        newStyle.setAlignment(style.getAlignmentEnum());
+        newStyle.setBorderBottom(style.getBorderBottomEnum());
+        newStyle.setBorderLeft(style.getBorderLeftEnum());
+        newStyle.setBorderRight(style.getBorderRightEnum());
+        newStyle.setBorderTop(style.getBorderTopEnum());
         newStyle.setBottomBorderColor(style.getBottomBorderColor());
         newStyle.setDataFormat(style.getDataFormat());
         newStyle.setFillBackgroundColor(style.getFillBackgroundColor());
         newStyle.setFillForegroundColor(style.getFillForegroundColor());
-        newStyle.setFillPattern(style.getFillPattern());
+        newStyle.setFillPattern(style.getFillPatternEnum());
         newStyle.setFont(workbook.getFontAt(style.getFontIndex()));
         newStyle.setHidden(style.getHidden());
         newStyle.setIndention(style.getIndention());
@@ -729,7 +729,7 @@ public final class Util {
         newStyle.setLocked(style.getLocked());
         newStyle.setRightBorderColor(style.getRightBorderColor());
         newStyle.setTopBorderColor(style.getTopBorderColor());
-        newStyle.setVerticalAlignment(style.getVerticalAlignment());
+        newStyle.setVerticalAlignment(style.getVerticalAlignmentEnum());
         newStyle.setWrapText(style.getWrapText());
         return newStyle;
     }
@@ -825,7 +825,7 @@ public final class Util {
                     mergedRegion.getFirstColumn() + destCellNum - cellNum, mergedRegion.getLastColumn() + destCellNum - cellNum);
             if (Util.isNewMergedRegion(newMergedRegion, mergedRegions)) {
                 mergedRegions.add(newMergedRegion);
-                sheet.addMergedRegion(newMergedRegion);
+                sheet.addMergedRegionUnsafe(newMergedRegion);
                 if (removeSourceMergedRegion) {
                     removeMergedRegion(sheet, mergedRegion);
                 }
@@ -1090,7 +1090,7 @@ public final class Util {
         if (row == null) {
             row = poiSheet.createRow(rowNum.intValue());
         }
-        Cell cell = row.getCell(cellNum.intValue(), org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
+        Cell cell = row.getCell(cellNum.intValue(), org.apache.poi.ss.usermodel.Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
         return cell;
     }
 }

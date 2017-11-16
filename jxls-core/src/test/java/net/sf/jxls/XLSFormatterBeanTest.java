@@ -25,8 +25,12 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.BuiltinFormats;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
@@ -105,7 +109,7 @@ public class XLSFormatterBeanTest extends TestCase {
 
 		public String fontName;
 		public short fontHeight;
-		public short boldweight;
+		public boolean boldweight;
 		public boolean italic;
 		public boolean strikeout;
 		public short typeOffset;
@@ -115,7 +119,7 @@ public class XLSFormatterBeanTest extends TestCase {
 		public FontVO( HSSFFont font ) {
 			fontName = font.getFontName();
 			fontHeight = font.getFontHeight();
-			boldweight = font.getBoldweight();
+			boldweight = font.getBold();
 			italic = font.getItalic();
 			strikeout = font.getStrikeout();
 			typeOffset = font.getTypeOffset();
@@ -149,7 +153,7 @@ public class XLSFormatterBeanTest extends TestCase {
 		public void applyTo( HSSFFont font ) {
 			font.setFontName( fontName );
 			font.setFontHeight( fontHeight );
-			font.setBoldweight( boldweight );
+			font.setBold( boldweight );
 			font.setItalic( italic );
 			font.setStrikeout( strikeout );
 			font.setTypeOffset( typeOffset );
@@ -264,22 +268,22 @@ public class XLSFormatterBeanTest extends TestCase {
 		}
 
 		public void applyFillTo( HSSFCellStyle style ) {
-			style.setFillPattern( this.fillPattern );
+			style.setFillPattern(FillPatternType.forInt(this.fillPattern));
 			style.setFillForegroundColor( this.fillForegroundColor );
 			style.setFillBackgroundColor( this.fillBackgroundColor );
 		}
 
 		public void applyTo( HSSFCellStyle style, HSSFWorkbook workbook ) {
 
-			style.setAlignment( this.alignment );
-			style.setBorderBottom( this.borderBottom );
-			style.setBorderLeft( this.borderLeft );
-			style.setBorderRight( this.borderRight );
-			style.setBorderTop( this.borderTop );
+			style.setAlignment(HorizontalAlignment.forInt(this.alignment));
+			style.setBorderBottom(BorderStyle.valueOf(this.borderBottom));
+			style.setBorderLeft(BorderStyle.valueOf(this.borderLeft));
+			style.setBorderRight(BorderStyle.valueOf(this.borderRight));
+			style.setBorderTop(BorderStyle.valueOf(this.borderTop));
 			style.setBottomBorderColor( this.bottomBorderColor );
 			style.setDataFormat( this.dataFormat );
 
-			style.setFillPattern( this.fillPattern );
+			style.setFillPattern(FillPatternType.forInt(this.fillPattern));
 			style.setFillForegroundColor( this.fillForegroundColor );
 			style.setFillBackgroundColor( this.fillBackgroundColor );
 
@@ -292,7 +296,7 @@ public class XLSFormatterBeanTest extends TestCase {
 			style.setRightBorderColor( this.rightBorderColor );
 			style.setRotation( this.rotation );
 			style.setTopBorderColor( this.topBorderColor );
-			style.setVerticalAlignment( this.verticalAlignment );
+			style.setVerticalAlignment(VerticalAlignment.forInt(this.verticalAlignment));
 			style.setWrapText( this.wrapText );
 		}
 
@@ -491,7 +495,7 @@ public class XLSFormatterBeanTest extends TestCase {
 			return this;
 		}
 
-		public StyleVO setFontBoldweight( short boldweight ) {
+		public StyleVO setFontBoldweight( boolean boldweight ) {
 			if ( !this.setNext ) {
 				return this;
 			}
