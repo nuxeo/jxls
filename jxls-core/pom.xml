@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.sf.jxls</groupId>
     <artifactId>jxls-core</artifactId>
-    <version>1.0.6-NX01</version>
+    <version>1.0.6-NX02-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>jxls-core</name>
     <url>http://jxls.sf.net</url>
