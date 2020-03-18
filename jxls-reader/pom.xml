@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.sf.jxls</groupId>
     <artifactId>jxls-reader</artifactId>
-    <version>1.0.6-NX02-SNAPSHOT</version>
+    <version>1.0.6-NX02</version>
     <packaging>jar</packaging>
     <name>jxls-reader</name>
     <url>http://jxls.sf.net</url>
