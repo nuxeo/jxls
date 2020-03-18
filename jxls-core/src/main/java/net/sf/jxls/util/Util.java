@@ -62,7 +62,7 @@ public final class Util {
     private static void removeRowCollectionPropertyFromCell(org.apache.poi.ss.usermodel.Cell cell,
             String collectionName) {
         String regex = "[-+*/().A-Za-z_0-9\\s]*";
-        if (cell != null && cell.getCellType() == org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING) {
+        if (cell != null && cell.getCellType() == CellType.STRING) {
             String cellValue = cell.getRichStringCellValue().getString();
             String strToReplace = "\\$\\{" + regex
                     + collectionName.replaceAll("\\.", "\\\\.") + "\\." + regex
@@ -187,7 +187,7 @@ public final class Util {
 
     private static void prepareCollectionPropertyInCellForDuplication(
             org.apache.poi.ss.usermodel.Cell cell, String collectionName, String collectionItemName) {
-        if (cell != null && cell.getCellType() == org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING) {
+        if (cell != null && cell.getCellType() == CellType.STRING) {
             String cellValue = cell.getRichStringCellValue().getString();
             String newValue = replaceCollectionProperty(cellValue,
                     collectionName, collectionItemName);
@@ -367,27 +367,27 @@ public final class Util {
     private static void moveCell(org.apache.poi.ss.usermodel.Cell srcCell, org.apache.poi.ss.usermodel.Cell destCell) {
         destCell.setCellStyle(srcCell.getCellStyle());
         switch (srcCell.getCellType()) {
-            case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING:
+            case STRING:
                 destCell.setCellValue(srcCell.getRichStringCellValue());
                 break;
-            case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_NUMERIC:
+            case NUMERIC:
                 destCell.setCellValue(srcCell.getNumericCellValue());
                 break;
-            case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BLANK:
-                destCell.setCellType(org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BLANK);
+            case BLANK:
+                destCell.setBlank();
                 break;
-            case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BOOLEAN:
+            case BOOLEAN:
                 destCell.setCellValue(srcCell.getBooleanCellValue());
                 break;
-            case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_ERROR:
+            case ERROR:
                 destCell.setCellErrorValue(srcCell.getErrorCellValue());
                 break;
-            case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_FORMULA:
+            case FORMULA:
                 break;
             default:
                 break;
         }
-        srcCell.setCellType(org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BLANK);
+        srcCell.setBlank();
     }
 
     private static void duplicateStyle(RowCollection rowCollection,
@@ -569,22 +569,22 @@ public final class Util {
             copyConditionalFormat(oldCell, newCell);
         }
         switch (oldCell.getCellType()) {
-            case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING:
+            case STRING:
                 newCell.setCellValue(oldCell.getRichStringCellValue());
                 break;
-            case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_NUMERIC:
+            case NUMERIC:
                 newCell.setCellValue(oldCell.getNumericCellValue());
                 break;
-            case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BLANK:
-                newCell.setCellType(org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BLANK);
+            case BLANK:
+                newCell.setBlank();
                 break;
-            case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BOOLEAN:
+            case BOOLEAN:
                 newCell.setCellValue(oldCell.getBooleanCellValue());
                 break;
-            case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_ERROR:
+            case ERROR:
                 newCell.setCellErrorValue(oldCell.getErrorCellValue());
                 break;
-            case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_FORMULA:
+            case FORMULA:
                 newCell.setCellFormula(oldCell.getCellFormula());
                 break;
             default:
@@ -600,24 +600,24 @@ public final class Util {
             copyConditionalFormat(oldCell, newCell);
         }
         switch (oldCell.getCellType()) {
-            case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING:
+            case STRING:
                 String oldValue = oldCell.getRichStringCellValue().getString();
                 String newValue = replaceExpressions(oldValue, expressionToReplace, expressionReplacement);
                 newCell.setCellValue(newCell.getSheet().getWorkbook().getCreationHelper().createRichTextString(newValue));
                 break;
-            case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_NUMERIC:
+            case NUMERIC:
                 newCell.setCellValue(oldCell.getNumericCellValue());
                 break;
-            case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BLANK:
-                newCell.setCellType(org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BLANK);
+            case BLANK:
+                newCell.setBlank();
                 break;
-            case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BOOLEAN:
+            case BOOLEAN:
                 newCell.setCellValue(oldCell.getBooleanCellValue());
                 break;
-            case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_ERROR:
+            case ERROR:
                 newCell.setCellErrorValue(oldCell.getErrorCellValue());
                 break;
-            case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_FORMULA:
+            case FORMULA:
                 newCell.setCellFormula(oldCell.getCellFormula());
                 break;
             default:

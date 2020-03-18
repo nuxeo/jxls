@@ -169,16 +169,16 @@ public class XLSFormatterBeanTest extends TestCase {
 
         public boolean setNext = true;
 
-        public short alignment;
-        public short borderBottom;
-        public short borderLeft;
-        public short borderRight;
-        public short borderTop;
+        public HorizontalAlignment alignment;
+        public BorderStyle borderBottom;
+        public BorderStyle borderLeft;
+        public BorderStyle borderRight;
+        public BorderStyle borderTop;
         public short bottomBorderColor;
         public short dataFormat;
         public short fillBackgroundColor;
         public short fillForegroundColor;
-        public short fillPattern;
+        public FillPatternType fillPattern;
         public short fontIndex;
         public boolean hidden;
         public short indention;
@@ -187,7 +187,7 @@ public class XLSFormatterBeanTest extends TestCase {
         public short rightBorderColor;
         public short rotation;
         public short topBorderColor;
-        public short verticalAlignment;
+        public VerticalAlignment verticalAlignment;
         public boolean wrapText;
 
         public FontVO fontVal;
@@ -268,22 +268,22 @@ public class XLSFormatterBeanTest extends TestCase {
         }
 
         public void applyFillTo( HSSFCellStyle style ) {
-            style.setFillPattern(FillPatternType.forInt(this.fillPattern));
+            style.setFillPattern(this.fillPattern);
             style.setFillForegroundColor( this.fillForegroundColor );
             style.setFillBackgroundColor( this.fillBackgroundColor );
         }
 
         public void applyTo( HSSFCellStyle style, HSSFWorkbook workbook ) {
 
-            style.setAlignment(HorizontalAlignment.forInt(this.alignment));
-            style.setBorderBottom(BorderStyle.valueOf(this.borderBottom));
-            style.setBorderLeft(BorderStyle.valueOf(this.borderLeft));
-            style.setBorderRight(BorderStyle.valueOf(this.borderRight));
-            style.setBorderTop(BorderStyle.valueOf(this.borderTop));
+            style.setAlignment(this.alignment);
+            style.setBorderBottom(this.borderBottom);
+            style.setBorderLeft(this.borderLeft);
+            style.setBorderRight(this.borderRight);
+            style.setBorderTop(this.borderTop);
             style.setBottomBorderColor( this.bottomBorderColor );
             style.setDataFormat( this.dataFormat );
 
-            style.setFillPattern(FillPatternType.forInt(this.fillPattern));
+            style.setFillPattern(this.fillPattern);
             style.setFillForegroundColor( this.fillForegroundColor );
             style.setFillBackgroundColor( this.fillBackgroundColor );
 
@@ -296,7 +296,7 @@ public class XLSFormatterBeanTest extends TestCase {
             style.setRightBorderColor( this.rightBorderColor );
             style.setRotation( this.rotation );
             style.setTopBorderColor( this.topBorderColor );
-            style.setVerticalAlignment(VerticalAlignment.forInt(this.verticalAlignment));
+            style.setVerticalAlignment(this.verticalAlignment);
             style.setWrapText( this.wrapText );
         }
 
@@ -310,7 +310,7 @@ public class XLSFormatterBeanTest extends TestCase {
             if ( !this.setNext ) {
                 return this;
             }
-            this.alignment = alignment;
+            this.alignment = HorizontalAlignment.forInt(alignment);
             return this;
         }
 
@@ -318,7 +318,7 @@ public class XLSFormatterBeanTest extends TestCase {
             if ( !this.setNext ) {
                 return this;
             }
-            this.borderBottom = borderBottom;
+            this.borderBottom = BorderStyle.valueOf(borderBottom);
             return this;
         }
 
@@ -326,7 +326,7 @@ public class XLSFormatterBeanTest extends TestCase {
             if ( !this.setNext ) {
                 return this;
             }
-            this.borderLeft = borderLeft;
+            this.borderLeft = BorderStyle.valueOf(borderLeft);
             return this;
         }
 
@@ -334,7 +334,7 @@ public class XLSFormatterBeanTest extends TestCase {
             if ( !this.setNext ) {
                 return this;
             }
-            this.borderRight = borderRight;
+            this.borderRight = BorderStyle.valueOf(borderRight);
             return this;
         }
 
@@ -342,7 +342,7 @@ public class XLSFormatterBeanTest extends TestCase {
             if ( !this.setNext ) {
                 return this;
             }
-            this.borderTop = borderTop;
+            this.borderTop = BorderStyle.valueOf(borderTop);
             return this;
         }
 
@@ -395,7 +395,7 @@ public class XLSFormatterBeanTest extends TestCase {
             if ( !this.setNext ) {
                 return this;
             }
-            this.fillPattern = fillPattern;
+            this.fillPattern = FillPatternType.forInt(fillPattern);
             return this;
         }
 
@@ -467,7 +467,7 @@ public class XLSFormatterBeanTest extends TestCase {
             if ( !this.setNext ) {
                 return this;
             }
-            this.verticalAlignment = verticalAlignment;
+            this.verticalAlignment = VerticalAlignment.forInt(verticalAlignment);
             return this;
         }
 

@@ -4,6 +4,7 @@ import net.sf.jxls.tag.Block;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -118,7 +119,7 @@ public class TagBodyHelper {
     }
 
     private static void replacePropertyInCell(Cell cell, String oldProperty, String newProperty) {
-        if (cell != null && cell.getCellType() == Cell.CELL_TYPE_STRING) {
+        if (cell != null && cell.getCellType() == CellType.STRING) {
             String cellValue = cell.getRichStringCellValue().getString();
             String newValue = cellValue.replaceAll(oldProperty, newProperty);
             cell.setCellValue(cell.getSheet().getWorkbook().getCreationHelper().createRichTextString(newValue));
@@ -220,7 +221,7 @@ public class TagBodyHelper {
     static void clearCell(Cell cell) {
         if (cell != null) {
             cell.setCellValue(cell.getSheet().getWorkbook().getCreationHelper().createRichTextString(""));
-            cell.setCellType(Cell.CELL_TYPE_BLANK);
+            cell.setBlank();
         }
     }
 
@@ -235,7 +236,7 @@ public class TagBodyHelper {
         if (row != null && row.getFirstCellNum() >= 0 && row.getLastCellNum() >= 0) {
             for (int i = row.getFirstCellNum(), c = row.getLastCellNum(); i <= c; i++) {
                 Cell cell = row.getCell(i);
-                if (cell != null && cell.getCellType() == Cell.CELL_TYPE_STRING && cell.getRichStringCellValue().getString().matches("\\$\\[.*?\\]")) {
+                if (cell != null && cell.getCellType() == CellType.STRING && cell.getRichStringCellValue().getString().matches("\\$\\[.*?\\]")) {
                     String cellValue = cell.getRichStringCellValue().getString();
                     String[] parts = cellValue.split("\\$\\[.*?\\]");
                     String newCellValue = parts[0];
